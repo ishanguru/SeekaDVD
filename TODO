@@ -1,0 +1,16 @@
+Things to do: 
+
+Frontend:
+ - Lets try get basic mockups done, we can do something netflix style. Question: Should the images be stored in a db? or just statically in a folder or something?
+ - User logon/logoff/create page
+ - Marketplace page
+ - Checkout
+
+Backend:
+ - Basic flask app
+ - Successful persistence to a db
+ - User logon/logoff/create backend functionality
+ - Marketplace data (basic items + pricing, etc)
+ - Stripe connectivity (not sure how yet but we can read up on how this works)
+
+
