@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<link rel="stylesheet" href="./css/bootstrap.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> <!-- adding jQuery.js -->
+    <script src="./js/bootstrap.min.js"></script>
+
+    <title>seekaDvd</title>
+  </head>
+
+  <body>
+
+  <div class="container">
+    <div id="viewCartButton">
+          <button class="btn btn-sm pull-right" type="button" data-toggle="modal" data-target="#helpModal" accesskey="h">
+          <h6><b>VIEW CART</b></h6>
+          </button>
+    </div>
+    <div id="title">SEEKAdvd</div>
+    <div id="catchphrase">Your one stop dvd shop ...</div>
+  </div>
+    <!-- Help Modal -->
+    <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">This will be our stripe checkout stuff</h4>
+          </div>
+          <div class="modal-body">
+            <h6>Stuff goes here</h6>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://use.fontawesome.com/37b4cff8f4.js"></script>
+    <script src="./js/controller.js"></script>
+
+  </body>
+</html>
