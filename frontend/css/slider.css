@@ -45,6 +45,14 @@
   background: #a03232;
 }
 
+.frame ul li:hover {
+  background: #a03232;
+}
+
+img:hover{
+  opacity: 0.5;
+}
+
 
 /* Scrollbar */
 
