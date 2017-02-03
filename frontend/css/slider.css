@@ -30,7 +30,7 @@
 
 .frame ul li {
   float: left;
-  width: 227px;
+  width: 180px; //here
   height: 100%;
   margin: 0 1px 0 0;
   padding: 0;
