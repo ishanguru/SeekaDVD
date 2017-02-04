@@ -6,6 +6,10 @@ body
 	background-color: #000000;
 }
 
+.ng-invalid {
+    color: red;
+}
+
 #form {
 	width: 450px;
 	transition:width 0.5s;
@@ -27,7 +31,7 @@ body
     font-family: 'Avenir', sans-serif;
     padding-top: 3%;
     color: #FFFFFF;
-    font-size: 120px;
+    font-size: 90px;
     text-align: center;
 }
 
@@ -37,6 +41,11 @@ body
     color: #FFFFFF;
     font-size: 30px;
     text-align: center;
+}
+
+#moviecontainer {
+    padding-left: 2%;
+    padding-right: 2%;
 }
 
 #navbar {
