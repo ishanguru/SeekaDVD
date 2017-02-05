@@ -7,7 +7,7 @@ Frontend:
  - Checkout
 
 Backend:
- - Basic flask app
+ - Basic flask app (##There are some issues since I am not completely aware of the way html files work. But I think I shoud be able to figure it out soon. Also, I have put in a salting function which I found on a website. We could not use it we want.)
  - Successful persistence to a db
  - User logon/logoff/create backend functionality
  - Marketplace data (basic items + pricing, etc)
