@@ -50,15 +50,35 @@ span[ng-click] {
     flex-direction: row;
 }
 
-#title {
+#numberInCart {
+    height: 100%;
+    width: 30%;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+    border-right: thin solid #000000;
+}
+
+#viewCart {
+    height: 100%;
+    width: 70%;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#titlefont {
     font-family: 'Avenir', sans-serif;
     padding-top: 3%;
     color: #FFFFFF;
     font-size: 80px;
+    font-weight: 1px;
     text-align: center;
 }
 
-#catchphrase {
+#catchphrasefont {
     font-family: 'Avenir', sans-serif;
     /*padding-top: 5%;*/
     color: #FFFFFF;
