@@ -5,14 +5,12 @@
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/slider.css">
-    <link rel="stylesheet" href="lightbox/css/lightbox.css">
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="http://darsa.in/sly/examples/js/vendor/plugins.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sly/1.6.1/sly.min.js"></script>
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <script src="bower_components/ngcart/dist/ngCart.js"></script>
 
     <script src="./js/slider.js"></script>
     <script src="./js/slider2.js"></script>
@@ -52,7 +50,7 @@
             <h4 class="modal-title" id="myModalLabel">This will be our stripe checkout stuff</h4>
          </div>
           <div class="modal-body">
-                <form id="payment-form">
+                <form action="/URL" method="POST" id="payment-form">
                   <span class="payment-errors"></span>
 
                   <div class="form-row">

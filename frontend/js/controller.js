@@ -10,6 +10,8 @@ $(function() {
     Stripe.card.createToken($form, stripeResponseHandler);
 
     // Prevent the form from being submitted:
+    // console.log($form)
+
     return false;
   });
 });
@@ -18,9 +20,12 @@ function stripeResponseHandler(status, response) {
   // Grab the form:
   var $form = $('#payment-form');
 
+  console.log($form)
+
   if (response.error) { // Problem!
 
     // Show the errors on the form:
+    console.log(response.error);
     $form.find('.payment-errors').text(response.error.message);
     $form.find('.submit').prop('disabled', false); // Re-enable submission
 
@@ -29,21 +34,18 @@ function stripeResponseHandler(status, response) {
     // Get the token ID:
     var token = response.id;
 
-    console.log(token);
     // Insert the token ID into the form so it gets submitted to the server:
-    // $form.append($('<input type="hidden" name="stripeToken">').val(token));
+    $form.append($('<input type="hidden" name="stripeToken">').val(token));
 
-    // Submit the form:
+    //Here is where we would send the form/data/token to the backend to make the Stripe transaction
+
+    console.log(token);
+
+    $form.find('.submit').prop('disabled', false);
+    $form[0].reset();
+
+    $('#helpModal').modal('hide');
+
     // $form.get(0).submit();
-
   }
 };
-
-//Here is where the angular stuff starts
-
-var myApp = angular.module('myApp', ['ngCart']);
-
-myApp.controller ('myCtrl', ['$scope', '$http', 'ngCart', function($scope, $http, ngCart) {
-    ngCart.setTaxRate(7.5);
-    ngCart.setShipping(2.99);    
-}]);
