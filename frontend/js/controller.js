@@ -35,5 +35,15 @@ function stripeResponseHandler(status, response) {
 
     // Submit the form:
     // $form.get(0).submit();
+
   }
 };
+
+//Here is where the angular stuff starts
+
+var myApp = angular.module('myApp', ['ngCart']);
+
+myApp.controller ('myCtrl', ['$scope', '$http', 'ngCart', function($scope, $http, ngCart) {
+    ngCart.setTaxRate(7.5);
+    ngCart.setShipping(2.99);    
+}]);

@@ -12,6 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sly/1.6.1/sly.min.js"></script>
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="bower_components/ngcart/dist/ngCart.js"></script>
 
     <script src="./js/slider.js"></script>
     <script src="./js/slider2.js"></script>
@@ -22,6 +23,11 @@
   </head>
 
   <body>
+
+<!--   <div id="cartContainer" class="">
+            <div id="numberInCart" class="ng-binding">0</div>
+            <div id="viewCart" data-toggle="modal" data-target="#helpModal">view cart</div>
+  </div> -->
 
   <div class="container">
     <div id="viewCartButton">
@@ -71,6 +77,14 @@
                       <input type="text" size="4" data-stripe="cvc">
                     </label>
                   </div>
+
+                  <div class="form-row">
+                    <label>
+                        <span>ZIP</span>
+                        <input id="zip" size="5" type="text" name="address_zip" data-stripe="address_zip">
+                      </label>
+                  </div>
+                  <br>
                   <input type="submit" class="submit" value="Submit Payment">
                 </form>
             <div class="modal-footer">
@@ -82,8 +96,56 @@
     </div>
 
      <!-- ###################### -->
+     <br>
 
      <div id="moviecontainer">
+        <div class="row" align="center">
+          <div class="col-md-3">
+            <img src="images/fight_club.jpg" class="img-responsive" alt="fightclub" height="300" width="200">
+          </div>
+          <div class="col-md-3">
+            <img src="images/die_hard.jpg" class="img-responsive" alt="diehard" height="300" width="200">
+          </div>
+          <div class="col-md-3">
+            <img src="images/shooter.jpg" class="img-responsive" alt="shooter" height="300" width="200">
+          </div>
+          <div class="col-md-3">
+            <img src="images/pulp_fiction.jpg" class="img-responsive" alt="pulpfiction" height="300" width="200">
+          </div>
+        </div>
+        <br>
+        <div class="row" align="center">
+          <div class="col-md-3">
+            <img src="images/braveheart.jpg" class="img-responsive" alt="braveheart" height="300" width="200">
+          </div>
+          <div class="col-md-3">
+            <img src="images/the_godfather.jpg" class="img-responsive" alt="thegodfather" height="300" width="200">
+          </div>
+          <div class="col-md-3">
+            <img src="images/the_matrix.jpg" class="img-responsive" alt="thematrix" height="300" width="200">
+          </div>
+          <div class="col-md-3">
+            <img src="images/tropic_thunder.jpg" class="img-responsive" alt="tropicthunder" height="300" width="200">
+          </div>
+        </div>
+        <br>
+        <div class="row" align="center">
+          <div class="col-md-3">
+            <img src="images/dark_knight.jpg" class="img-responsive" alt="darkknight" height="300" width="200">
+          </div>
+          <div class="col-md-3">
+            <img src="images/gladiator.jpg" class="img-responsive" alt="gladiator" height="300" width="200">
+          </div>
+          <div class="col-md-3">
+            <img src="images/inception.jpg" class="img-responsive" alt="inception" height="300" width="200">
+          </div>
+          <div class="col-md-3">
+            <img src="images/i_am_legend.jpg" class="img-responsive" alt="iamlegend" height="300" width="200">
+          </div>
+        </div>
+     </div>
+
+<!--      <div id="moviecontainer">
           <div class="wrap">
         <h2>Action</h2>
 
@@ -110,9 +172,9 @@
         </div>
 
       </div>
-    </div>
+    </div> -->
 
-     <div id="moviecontainer">
+<!--      <div id="moviecontainer">
         <div class="wrap">
         <h2>Comedy</h2>
 
@@ -139,8 +201,7 @@
         </div>
 </div>
 
-<!-- <ul class="pages"></ul> -->
-</div>
+</div> -->
 
 
 
