@@ -91,7 +91,7 @@
 					currency				: "USD",
 					language				: "english-us",
 
-					cartStyle				: "div",
+					cartStyle				: "table",
 					cartColumns			: [
 						{ attr: "name", label: "Name" },
 						{ attr: "price", label: "Price", view: 'currency' },
@@ -1498,6 +1498,11 @@
 					}
 					, items: function (selector) {
 						simpleCart.writeCart(selector);
+						simpleCart.trigger("afterCreate");
+						simpleCart.bind("afterCreate", function(){
+							$cart_table = $(".simpleCart_items table")
+							$cart_table.addClass("table").addClass("table-hover")
+						});
 					}
 					, tax: function () {
 						return simpleCart.toCurrency(simpleCart.tax());
