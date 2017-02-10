@@ -1,10 +1,13 @@
 #1#!/usr/bin/env python2.7
 
+import os
+import uuid
 from flask import Flask, render_template, url_for, request, session, redirect
 from flask_pymongo import PyMongo
 import bcrypt
 
-app = Flask(__name__,template_folder='template')
+tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)),'frontend')
+app = Flask(__name__,template_folder=tmpl_dir)
 
 app.config['MONGO_DBNAME'] = 'userdb'
 app.config['MONGO_URI'] = 'mongodb://localhost:27017/userdb'
