@@ -3,28 +3,29 @@
   <head>
 
     <meta charset="utf-8">
-    <link rel="icon" href="../../favicon.ico">
     
     <title>seekaDVD</title>
 
     <link href="./css/bootstrap.min.css" rel="stylesheet">
     <link href="./css/signin.css" rel="stylesheet">
-    <link rel="stylesheet" href="./css/style.css">
+    <link href="./css/style.css" rel="stylesheet">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="./js/login.js"></script>
   
   </head>
 
   <body>
 
     <div class="container">
-        <div id="titlefont">SEEKAdvd <span id="catchphrasefont">Your one stop dvd shop ...</span></div>
+        <div id="titlefont">SEEKAdvd</div>
         <div id="catchphrasefont">Please sign in or register to gain access to this marketplace.</div>
         <br>
     </div>
 
     <div class="container">
 
-      <form class="form-signin">
+      <form class="form-signin" id="login-form">
         <!-- <h2 class="form-signin-heading">Please sign in.</h2> -->
         <label for="inputEmail" class="sr-only">Email address</label>
         <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
@@ -38,10 +39,10 @@
         <br>
         <div class="row">
             <div class="col-md-6">
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" id="signin">Sign in</button>
             </div>
             <div class="col-md-6">
-                <button class="btn btn-lg btn-success btn-block" type="submit">Register</button>
+                <button class="btn btn-lg btn-success btn-block" type="submit" id="register">Register</button>
             </div>
         </div>
       </form>
