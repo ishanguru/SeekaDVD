@@ -21,7 +21,7 @@ app = Flask(__name__,template_folder='templates')
 CORS(app)
 
 app.config['MONGO_DBNAME'] = 'userdb'
-app.config['MONGO_URI'] = 'mongodb://localhost:27017/userdb'
+app.config['MONGO_URI'] = 'mongodb://Gunnernet:nachiket_99@ds147069.mlab.com:47069/userdb'
 
 mongo = PyMongo(app)
 
