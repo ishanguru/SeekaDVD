@@ -3,7 +3,7 @@ from flask import Flask, render_template, url_for, request, session, redirect
 from flask_pymongo import PyMongo
 from flask_jwt import JWT, jwt_required, current_identity
 from werkzeug.security import safe_str_cmp
-import bcrypt
+#import bcrypt
 import stripe
 
 from flask_cors import CORS, cross_origin 
