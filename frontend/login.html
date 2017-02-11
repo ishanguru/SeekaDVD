@@ -25,7 +25,7 @@
 
     <div class="container">
 
-      <form class="form-signin" id="login-form">
+      <form action="/URL" method="POST" class="form-signin" id="login-form">
         <!-- <h2 class="form-signin-heading">Please sign in.</h2> -->
         <label for="inputEmail" class="sr-only">Email address</label>
         <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
@@ -38,14 +38,43 @@
         </div>
         <br>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
                 <button class="btn btn-lg btn-primary btn-block" type="submit" id="signin">Sign in</button>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+      </form>
+
+      <span id="registerbutton"><h5 id="catchphrasefont">First time? Register <a onclick="buttonClicked()">here</a></h5></span>
+
+      <form action="/URL" method="POST" class="form-signin" id="register-form" hidden="true">
+        <!-- <h2 class="form-signin-heading">Please sign in.</h2> -->
+        <label for="inputFName" class="sr-only">First Name</label>
+        <input type="text" id="inputFName" class="form-control" placeholder="First Name" required="" autofocus="">
+        <label for="inputLName" class="sr-only">Last Name</label>
+        <input type="text" id="inputLName" class="form-control" placeholder="Last Name" required="" autofocus="">
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+        <div class="checkbox">
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-3">
             </div>
             <div class="col-md-6">
                 <button class="btn btn-lg btn-success btn-block" type="submit" id="register">Register</button>
             </div>
+            <div class="col-md-3">
+            </div>
         </div>
       </form>
+
+      <span id="signinbutton" hidden=""><h5 id="catchphrasefont">Not your first time? Sign in <a onclick="button2Clicked()">here</a></h5></span>
 
     </div>
 
