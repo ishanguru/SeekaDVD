@@ -35,17 +35,17 @@ function stripeResponseHandler(status, response) {
     var token = response.id;
 
     // Insert the token ID into the form so it gets submitted to the server:
-    $form.append($('<input type="hidden" name="stripeToken">').val(token));
+    $form.append($('<input type="hidden" id="stripeToken" name="stripeToken">').val(token));
 
     //Here is where we would send the form/data/token to the backend to make the Stripe transaction
 
     console.log(token);
 
     $form.find('.submit').prop('disabled', false);
-    $form[0].reset();
+    // $form[0].reset();
 
     $('#helpModal').modal('hide');
 
-    // $form.get(0).submit();
+    $form.get(0).submit();
   }
 };

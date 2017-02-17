@@ -20,6 +20,11 @@
     <script src="./static/js/bootstrap.min.js"></script>
 
     <title>seekaDvd</title>
+<!-- 
+    <script type="text/javascript">
+      loggedOnUser = '{{ email }}';
+      console.log(loggedOnUser)
+    </script> -->
   </head>
 
   <body>
@@ -31,8 +36,9 @@
           <li><a href="#home" class="w3-margin-left"><i><b>SEEKAdvd</b></i></a></li>
 
           <!-- Float links to the right. Hide them on small screens -->
+          <li class="w3-right w3-hide-small"><a href="#logout">{{ email }}</a></li>
           <li class="w3-right w3-hide-small"><a href="#about">ABOUT</a></li>
-          <li class="w3-right w3-hide-small"><a href="#about">SETTINGS</a></li>
+          <li class="w3-right w3-hide-small"><a href="#settings">SETTINGS</a></li>
           <li class="w3-right w3-hide-small"><a href="#helpModal" data-toggle="modal" data-target="#helpModal"><span class="simpleCart_quantity"></span> | VIEW CART</a></li>
           <li class="w3-right w3-hide-small"></li>
 
@@ -57,7 +63,7 @@
             <h4 class="modal-title" id="myModalLabel">This will be our stripe checkout stuff</h4>
          </div>
           <div class="modal-body">
-                <form action="/URL" method="POST" id="payment-form">
+                <form action="{{ url_for('payment') }}" method="POST" id="payment-form">
                   <span class="payment-errors"></span>
 
                   <div class="row">
@@ -103,6 +109,7 @@
                     <input type="submit" class="submit btn btn-success" value="Submit Payment">&nbsp;
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel Payment</button>
                   </div>
+                  <div name="stripeEmail" id="stripeEmail" value={{email}} hidden>{{ email }}</div>
                 </form>
             <div class="modal-footer">
             </div>

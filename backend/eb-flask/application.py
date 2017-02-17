@@ -13,22 +13,19 @@ STRIPE_SECRET_KEY = 'sk_test_TRBGyYCU1ze6s9uOhBSr52f5'
 
 stripe.api_key = STRIPE_SECRET_KEY
 
+application = Flask(__name__,template_folder='templates')
 
+CORS(application)
 
+application.config['MONGO_DBNAME'] = 'userdb'
+application.config['MONGO_URI'] = 'mongodb://Gunnernet:nachiket_99@ds147069.mlab.com:47069/userdb'
 
-app = Flask(__name__,template_folder='templates')
-
-CORS(app)
-
-app.config['MONGO_DBNAME'] = 'userdb'
-app.config['MONGO_URI'] = 'mongodb://Gunnernet:nachiket_99@ds147069.mlab.com:47069/userdb'
-
-mongo = PyMongo(app)
+mongo = PyMongo(application)
 
 #class User(object):
-#    def __init__(self, id, username, password):
+#    def __init__(self, id, inputEmail, password):
 #        self.id = id
-#        self.username = username
+#        self.inputEmail = inputEmail
 #        self.password = password
 #
 #    def __str__(self):
@@ -36,8 +33,8 @@ mongo = PyMongo(app)
     
 #user = User(1, 'user', 'password')
 
-#def authenticate(username, password):
-#    if username == user.username and password == user.password:
+#def authenticate(inputEmail, password):
+#    if inputEmail == user.inputEmail and password == user.password:
 #        return user
 #
 #def identity(payload):
@@ -45,7 +42,7 @@ mongo = PyMongo(app)
 
 #jwt = JWT(app, authenticate, identity)
 
-@app.after_request
+@application.after_request
 def after_request(response):
     response.headers.add('Access-Control-Allow-Origin', '*')
     if request.method == 'OPTIONS':
@@ -59,79 +56,95 @@ def after_request(response):
 
 
 
-@app.route('/')
+@application.route('/')
 def index():
-#    if 'username' in session:
-        #return 'You are logged in as ' + session['username']
+#    if 'inputEmail' in session:
+        #return 'You are logged in as ' + session['inputEmail']
 
-    return render_template('home.html')
+    return render_template('login.html')
 #
-##@app.route('/home', methods=['POST','GET'])
+##@application.route('/home', methods=['POST','GET'])
 ##def home():
 ##    return render_template(index.html)
 #
-@app.route('/login', methods=['POST', 'GET'])
+@application.route('/login', methods=['POST', 'GET'])
 #@jwt_required()
 def login():
-    
+    print('Cool stuff bro')
     users = mongo.db.users
-    login_user = users.find_one({'name' : request.form['username']})
+    login_user = users.find_one({'name' : request.form['inputEmail']})
 
     if login_user:
         #return ("You are a New User")
         #m = request.form['pass'].encode('utf-8'), login_user['password'].encode('utf-8')
         #if bcrypt.hashpw(request.form['pass'], login_user['password']) == login_user['password'] :
-        if request.form['pass'] == login_user['password'] :    
-            session['username'] = request.form['username']
+        if request.form['inputPassword'] == login_user['password'] :    
+            session['inputEmail'] = request.form['inputEmail']
+            email = request.form['inputEmail']
+            # return redirect(url_for('login'))
+            print email
             #return ("Successful Login")
-            return render_template('index3.html')
+            return render_template('index3.html', email=email)
 
-    return 'Invalid username/password combination'
+    return 'Invalid inputEmail/password combination'
 #
-@app.route('/register', methods=['POST', 'GET'])
+@application.route('/register', methods=['POST', 'GET'])
 #@jwt_required()
 def register():
-    
+    print('registering user')
     if request.method == 'POST':
-        users = mongo.db.users
-        existing_user = users.find_one({'name' : request.form['username']})
+        try: 
+            users = mongo.db.users
+            existing_user = users.find_one({'name' : request.form['inputEmail']})
+        except:
+            print "failed to find user"
 
         if existing_user is None:
             #hashpass = bcrypt.hashpw(request.form['pass'], bcrypt.gensalt())
-            hashpass = request.form['pass']
-            users.insert({'name' : request.form['username'], 'password' : hashpass})
-            session['username'] = request.form['username']
-            return redirect(url_for('index'))
+            print('creating user')
+            hashpass = request.form['inputPassword']
+            users.insert({'name' : request.form['inputEmail'], 'password' : hashpass})
+            session['inputEmail'] = request.form['inputEmail']
+            email = request.form['inputEmail']
+            # return redirect(url_for('login'))
+            print email
+            return render_template('index3.html', email=email)
         
-        return 'That username already exists!'
+        return 'That inputEmail already exists!'
 #
-    return render_template('register.html')
+    return render_template('login.html')
 
 
-@app.route('/payment', methods=['POST'])
-def payment_proceed():
+@application.route('/payment', methods=['POST', 'GET'])
+def payment():
     
-    token = request.POST['stripeToken']
+    print("Making payment")
+    token = request.form['stripeToken']
     # Amount in cents
     amount = 25000
+    print(token)
 
-#    customer = stripe.Customer.create(
-#        email=request.form['stripeEmail'],
-#        source=request.form['stripeToken']
-#    )
+    # customer = stripe.Customer.create(
+    #    email=request.form['stripeEmail'],
+    #    source=request.form['stripeToken']
+    # )
 
+    # print("Customer created")
+    # print(customer)
+
+    print("Charging Customer")
     charge = stripe.Charge.create(
         amount=amount,
         currency='usd',
-        customer=customer.id,
-        description='A payment for the Hello World project'
+        # customer=request.form['stripeEmail'],
+        description='A payment for the Hello World project',
+        source=token
     )
+    print(charge)
 
-    return render_template('payment_complete.html')
+    return render_template('index3.html')
 
 if __name__ == '__main__':
     
-    
-
-    app.secret_key = 'newsecret'
-    app.run(debug=True, host='0.0.0.0')
+    application.secret_key = 'newsecret'
+    application.run(debug=True, host='0.0.0.0')
