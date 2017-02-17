@@ -12,6 +12,7 @@ STRIPE_PUBLISHABLE_KEY = 'pk_test_HPcZRSKmS17XqjEEA48QoYvh'
 STRIPE_SECRET_KEY = 'sk_test_TRBGyYCU1ze6s9uOhBSr52f5'
 
 stripe.api_key = STRIPE_SECRET_KEY
+stripe.api_base = "https://api-tls12.stripe.com"
 
 application = Flask(__name__,template_folder='templates')
 
