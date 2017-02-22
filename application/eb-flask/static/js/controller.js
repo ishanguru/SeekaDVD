@@ -46,6 +46,10 @@ function stripeResponseHandler(status, response) {
 
     $('#helpModal').modal('hide');
 
+    simpleCart.update();
+    simpleCart.empty();
+    simpleCart.update();
+
     $form.get(0).submit();
   }
 };
