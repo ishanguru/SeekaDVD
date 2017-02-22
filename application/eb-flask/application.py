@@ -7,11 +7,35 @@ import stripe
 
 from flask_cors import CORS, cross_origin 
 
-STRIPE_PUBLISHABLE_KEY = 'pk_test_HPcZRSKmS17XqjEEA48QoYvh'  
-STRIPE_SECRET_KEY = 'sk_test_TRBGyYCU1ze6s9uOhBSr52f5'
+STRIPE_PUBLISHABLE_KEY = 'pk_test_PdLFWUk0BeVmaCrviRaoKxjN'  
+STRIPE_SECRET_KEY = 'sk_test_ALv9duL6BrcdpUv7U20KGr99'
 
 stripe.api_key = STRIPE_SECRET_KEY
 stripe.api_base = "https://api-tls12.stripe.com"
+
+class User(object):
+    def __init__(self, id, username, password):
+        self.id = id
+        self.username = username
+        self.password = password
+
+    def __str__(self):
+        return "User(id='%s')" % self.id
+
+def authenticate(username, password):
+    users = mongo.db.users
+    login_user = users.find_one({'name' : request.form['inputEmail']})
+
+    if login_user:
+        if request.form['inputPassword'] == login_user['password'] :    
+            session['inputEmail'] = request.form['inputEmail']
+            email = request.form['inputEmail']
+            currentUser = (email, login_user['password'])
+            return currentUser
+
+def identity(payload):
+    user_id = session['inputEmail']
+    return user_id
 
 application = Flask(__name__,template_folder='templates')
 
@@ -19,8 +43,11 @@ CORS(application)
 
 application.config['MONGO_DBNAME'] = 'userdb'
 application.config['MONGO_URI'] = 'mongodb://Gunnernet:nachiket_99@ds147069.mlab.com:47069/userdb'
+application.secret_key = 'newsecret'
 
 mongo = PyMongo(application)
+
+jwt = JWT(application, authenticate, identity)
 
 @application.after_request
 def after_request(response):
@@ -75,6 +102,7 @@ def register():
 
 
 @application.route('/payment', methods=['POST', 'GET'])
+# @jwt_required()
 def payment():
     
     print("Making payment")
@@ -104,6 +132,4 @@ def payment():
     return render_template('index3.html')
 
 if __name__ == '__main__':
-    
-    application.secret_key = 'newsecret'
     application.run(debug=True, host='0.0.0.0')
