@@ -4,6 +4,7 @@ from flask_pymongo import PyMongo
 from flask_jwt import JWT, jwt_required, current_identity
 from werkzeug.security import safe_str_cmp
 import stripe
+import jwt
 
 from flask_cors import CORS, cross_origin 
 
@@ -47,7 +48,7 @@ application.secret_key = 'newsecret'
 
 mongo = PyMongo(application)
 
-jwt = JWT(application, authenticate, identity)
+# jwt = JWT(application, authenticate, identity)
 
 @application.after_request
 def after_request(response):
@@ -63,6 +64,13 @@ def after_request(response):
 def index():
     return render_template('login.html')
 
+@application.route('/auth')
+def get_auth_token():
+    print jsonify(jwt)
+    return render_template('index3.html')
+    # token = user.generate_auth_token()
+    # return jsonify({ 'token': token.decode('ascii') })
+
 @application.route('/login', methods=['POST', 'GET'])
 #@jwt_required()
 def login():
@@ -74,7 +82,16 @@ def login():
         if request.form['inputPassword'] == login_user['password'] :    
             session['inputEmail'] = request.form['inputEmail']
             email = request.form['inputEmail']
-            return render_template('index3.html', email=email)
+
+            payload = {'iss': email}
+            #payload = {'iss': email, 'exp': 1300819380, 'admin': True}
+
+            token = jwt.encode(
+            payload,
+            application.config.get('SECRET_KEY'),
+            algorithm='HS256')
+
+            return render_template('index3.html', email=email, token=token)
 
     return 'Invalid inputEmail/password combination'
 
@@ -94,7 +111,16 @@ def register():
             users.insert({'name' : request.form['inputEmail'], 'password' : hashpass})
             session['inputEmail'] = request.form['inputEmail']
             email = request.form['inputEmail']
-            return render_template('index3.html', email=email)
+
+            payload = {'iss': email}
+            #payload = {'iss': email, 'exp': 1300819380, 'admin': True}
+
+            token = jwt.encode(
+            payload,
+            application.config.get('SECRET_KEY'),
+            algorithm='HS256')
+
+            return render_template('index3.html', email=email, token=token)
         
         return 'That inputEmail already exists!'
 #
@@ -104,11 +130,20 @@ def register():
 @application.route('/payment', methods=['POST', 'GET'])
 # @jwt_required()
 def payment():
-    
-    print("Making payment")
+
+    jwtToken = request.form['jwtToken']
+    currentUser = request.form['stripeEmail']
+    tokend = jwt.decode(jwtToken, application.config.get('SECRET_KEY'), algorithm= 'HS256')
+
+    if tokend['iss'] != currentUser:
+        return render_template('login.html')
+
+    cartTotal = request.form['cartTotal']
+
     token = request.form['stripeToken']
     # Amount in cents
-    amount = 25000
+    amount = cartTotal*100
+
     print(token)
 
     # customer = stripe.Customer.create(
@@ -119,17 +154,17 @@ def payment():
     # print("Customer created")
     # print(customer)
 
-    print("Charging Customer")
-    charge = stripe.Charge.create(
-        amount=amount,
-        currency='usd',
-        # customer=request.form['stripeEmail'],
-        description='A payment for the Hello World project',
-        source=token
-    )
-    print(charge)
+    # print("Charging Customer")
+    # charge = stripe.Charge.create(
+    #     amount=amount,
+    #     currency='usd',
+    #     # customer=request.form['stripeEmail'],
+    #     description='A payment for the Hello World project',
+    #     source=token
+    # )
+    # print(charge)
 
-    return render_template('index3.html')
+    return render_template('index3.html', email=currentUser, token=jwtToken)
 
 if __name__ == '__main__':
     application.run(debug=True, host='0.0.0.0')

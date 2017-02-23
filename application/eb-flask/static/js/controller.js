@@ -36,6 +36,7 @@ function stripeResponseHandler(status, response) {
 
     // Insert the token ID into the form so it gets submitted to the server:
     $form.append($('<input type="hidden" id="stripeToken" name="stripeToken">').val(token));
+    $form.append($('<input type="hidden" id="cartTotal" name="cartTotal">').val(simpleCart.total()));
 
     //Here is where we would send the form/data/token to the backend to make the Stripe transaction
 

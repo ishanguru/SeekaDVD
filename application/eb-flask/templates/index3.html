@@ -109,7 +109,8 @@
                     <input type="submit" class="submit btn btn-success" value="Submit Payment">&nbsp;
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel Payment</button>
                   </div>
-                  <div name="stripeEmail" id="stripeEmail" value={{email}} hidden>{{ email }}</div>
+                  <input type="hidden" id="jwtToken" name="jwtToken" value={{token}}>
+                  <input type="hidden" id="stripeEmail" name="stripeEmail" value={{email}}>
                 </form>
             <div class="modal-footer">
             </div>
