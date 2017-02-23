@@ -32,7 +32,7 @@
           <li class="w3-right w3-hide-small"><a href="{{ url_for('logout') }}">LOGOUT</a></li>
           <li class="w3-right w3-hide-small"><a href="#user">{{ email }}</a></li>
           <li class="w3-right w3-hide-small"><a href="#about">ABOUT</a></li>
-          <li class="w3-right w3-hide-small"><a href="/history/{{ email }}">HISTORY</a></li>
+          <li class="w3-right w3-hide-small"><a href="#historyModal" data-toggle="modal" data-target="#historyModal">HISTORY</a></li>
           <li class="w3-right w3-hide-small"><a href="#helpModal" data-toggle="modal" data-target="#helpModal"><span class="simpleCart_quantity"></span> | VIEW CART</a></li>
           <li class="w3-right w3-hide-small"></li>
 
@@ -47,6 +47,44 @@
    <!-- ###################### -->
 
     <!-- Help Modal -->
+    <div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h5 class="modal-title" id="myModalLabel" align="center">Previous Purchases</h4>
+         </div>
+          <div class="modal-body">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-3">
+                <h6>Order date</h6>
+              </div> 
+              <div class="col-md-3">
+                <h6>Order total ($)</h6>
+              </div> 
+            </div>
+          {% for entry in history %}
+            <div class="row">
+              <div class="col-md-3">
+                {{entry.name}}
+              </div> 
+              <div class="col-md-3">
+                {{entry.TransactionAmount}}
+              </div> 
+            </div>
+          {% endfor %}
+          </div>
+            <div class="modal-footer">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Help Modal -->
     <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -58,14 +96,15 @@
          </div>
           <div class="modal-body">
                 <form action="{{ url_for('payment') }}" method="POST" id="payment-form">
-                  <span class="payment-errors"></span>
-
+                  <h5 align="center" id="warningMessage"><span class="payment-errors"></span></h4>
+                  <br>
                   <div class="row">
                     <div class="col-md-6">
                         <div class="simpleCart_items"></div>
                     </div>
                     <div class="col-md-6">
-                      <br><br><br><br><br><br><br><br>
+                      <img src="static/images/card.png" height="250" width="375">
+                      <br><br>
                       <div class="form-row">
                           <label>
                             <span>Card Number</span>
@@ -97,7 +136,7 @@
                         </div>
                     </div>
                   </div>
-                  <div class="simpleCart_total"></div>
+                  <h4><div class="simpleCart_total"></div></h4>
                   <br>
                   <div align="center">
                     <input type="submit" class="submit btn btn-success" value="Submit Payment">&nbsp;

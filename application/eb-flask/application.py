@@ -65,7 +65,10 @@ def login():
 
             tokentoken = token
 
-            return render_template('index3.html', email=email, token=token)
+            userhistory = mongo.db.userhistory
+            currentHistory = list(userhistory.find({"name" : email}))
+
+            return render_template('index3.html', email=email, token=token, history=currentHistory)
 
     return 'Invalid inputEmail/password combination'
 
@@ -96,7 +99,10 @@ def register():
 
             tokentoken = token
 
-            return render_template('index3.html', email=email, token=token)
+            userhistory = mongo.db.userhistory
+            currentHistory = list(userhistory.find({"name" : email}))
+
+            return render_template('index3.html', email=email, token=token, history=currentHistory)
 
         return 'That inputEmail already exists!'
 #
@@ -122,10 +128,6 @@ def payment():
     # Amount in cents
     amount = cartTotal*100
 
-    print(amount)
-
-
-
     # customer = stripe.Customer.create(
     #    email=request.form['stripeEmail'],
     #    source=request.form['stripeToken']
@@ -134,21 +136,22 @@ def payment():
     # print("Customer created")
     # print(customer)
 
-    print("Charging Customer")
-    charge = stripe.Charge.create(
-        amount=amount,
-        currency='usd',
-        # customer=request.form['stripeEmail'],
-        description='A payment for seeka-dvd',
-        source=token
-    )
-    print(charge)
+    # print("Charging Customer")
+    # charge = stripe.Charge.create(
+    #     amount=amount,
+    #     currency='usd',
+    #     # customer=request.form['stripeEmail'],
+    #     description='A payment for seeka-dvd',
+    #     source=token
+    # )
+    # print(charge)
 
     userhistory = mongo.db.userhistory
     userhistory.insert_one({"name": currentUser, "TransactionAmount": cartTotal})
 
-    return render_template('index3.html', email=currentUser, token=jwtToken)
+    currentHistory = list(userhistory.find({"name" : currentUser}))
 
+    return render_template('index3.html', email=currentUser, token=jwtToken, history=currentHistory)
 
 
 @application.route('/history/<name>', methods=['POST', 'GET'])
@@ -159,15 +162,6 @@ def history(name):
     if (userhistory.find({"name" : name})):
         currentHistory = list(userhistory.find({"name" : name}))
         return render_template('index3.html')
-
-
-
-
-
-
-
-
-
 
 if __name__ == '__main__':
     application.run(debug=True, host='0.0.0.0')
