@@ -109,13 +109,13 @@ def payment():
         print e
         return render_template('login.html')
 
-    cartTotal = request.form['cartTotal']
+    cartTotal = float(request.form['cartTotal'])
 
     token = request.form['stripeToken']
     # Amount in cents
     amount = cartTotal*100
 
-    print(token)
+    print(amount)
 
     # customer = stripe.Customer.create(
     #    email=request.form['stripeEmail'],
