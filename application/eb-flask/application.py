@@ -38,6 +38,10 @@ def after_request(response):
 def index():
     return render_template('login.html')
 
+@application.route('/logout')
+def logout():
+    return render_template('login.html')
+
 @application.route('/login', methods=['POST', 'GET'])
 def login():
     print('Cool stuff bro')
