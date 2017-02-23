@@ -6,9 +6,9 @@ from werkzeug.security import safe_str_cmp
 import stripe
 import jwt
 
-from flask_cors import CORS, cross_origin 
+from flask_cors import CORS, cross_origin
 
-STRIPE_PUBLISHABLE_KEY = 'pk_test_PdLFWUk0BeVmaCrviRaoKxjN'  
+STRIPE_PUBLISHABLE_KEY = 'pk_test_PdLFWUk0BeVmaCrviRaoKxjN'
 STRIPE_SECRET_KEY = 'sk_test_ALv9duL6BrcdpUv7U20KGr99'
 
 stripe.api_key = STRIPE_SECRET_KEY
@@ -23,6 +23,8 @@ application.config['MONGO_URI'] = 'mongodb://Gunnernet:nachiket_99@ds147069.mlab
 application.secret_key = 'newsecret'
 
 mongo = PyMongo(application)
+
+tokentoken = None
 
 @application.after_request
 def after_request(response):
@@ -44,12 +46,12 @@ def logout():
 
 @application.route('/login', methods=['POST', 'GET'])
 def login():
-    
+
     users = mongo.db.users
     login_user = users.find_one({'name' : request.form['inputEmail']})
 
     if login_user:
-        if request.form['inputPassword'] == login_user['password'] :    
+        if request.form['inputPassword'] == login_user['password'] :
             session['inputEmail'] = request.form['inputEmail']
             email = request.form['inputEmail']
 
@@ -61,6 +63,8 @@ def login():
             application.config.get('SECRET_KEY'),
             algorithm='HS256')
 
+            tokentoken = token
+
             return render_template('index3.html', email=email, token=token)
 
     return 'Invalid inputEmail/password combination'
@@ -69,7 +73,7 @@ def login():
 def register():
     print('registering user')
     if request.method == 'POST':
-        try: 
+        try:
             users = mongo.db.users
             existing_user = users.find_one({'name' : request.form['inputEmail']})
         except:
@@ -90,8 +94,10 @@ def register():
             application.config.get('SECRET_KEY'),
             algorithm='HS256')
 
+            tokentoken = token
+
             return render_template('index3.html', email=email, token=token)
-        
+
         return 'That inputEmail already exists!'
 #
     return render_template('login.html')
@@ -101,10 +107,11 @@ def register():
 def payment():
 
     jwtToken = request.form['jwtToken']
+    tokentoken = request.form['jwtToken']
     currentUser = request.form['stripeEmail']
-    
+
     try:
-        tokend = jwt.decode(jwtToken, application.config.get('SECRET_KEY'), algorithm= 'HS256')        
+        tokend = jwt.decode(jwtToken, application.config.get('SECRET_KEY'), algorithm= 'HS256')
     except Exception as e:
         print e
         return render_template('login.html')
@@ -117,6 +124,8 @@ def payment():
 
     print(amount)
 
+
+
     # customer = stripe.Customer.create(
     #    email=request.form['stripeEmail'],
     #    source=request.form['stripeToken']
@@ -125,17 +134,40 @@ def payment():
     # print("Customer created")
     # print(customer)
 
-    # print("Charging Customer")
-    # charge = stripe.Charge.create(
-    #     amount=amount,
-    #     currency='usd',
-    #     # customer=request.form['stripeEmail'],
-    #     description='A payment for seeka-dvd',
-    #     source=token
-    # )
-    # print(charge)
+    print("Charging Customer")
+    charge = stripe.Charge.create(
+        amount=amount,
+        currency='usd',
+        # customer=request.form['stripeEmail'],
+        description='A payment for seeka-dvd',
+        source=token
+    )
+    print(charge)
+
+    userhistory = mongo.db.userhistory
+    userhistory.insert_one({"name": currentUser, "TransactionAmount": cartTotal})
 
     return render_template('index3.html', email=currentUser, token=jwtToken)
+
+
+
+@application.route('/history/<name>', methods=['POST', 'GET'])
+def history(name):
+
+    userhistory = mongo.db.userhistory
+
+    if (userhistory.find({"name" : name})):
+        currentHistory = list(userhistory.find({"name" : name}))
+        return render_template('index3.html')
+
+
+
+
+
+
+
+
+
 
 if __name__ == '__main__':
     application.run(debug=True, host='0.0.0.0')
