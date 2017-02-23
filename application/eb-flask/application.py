@@ -44,7 +44,7 @@ def logout():
 
 @application.route('/login', methods=['POST', 'GET'])
 def login():
-    print('Cool stuff bro')
+    
     users = mongo.db.users
     login_user = users.find_one({'name' : request.form['inputEmail']})
 
@@ -53,8 +53,8 @@ def login():
             session['inputEmail'] = request.form['inputEmail']
             email = request.form['inputEmail']
 
-            payload = {'iss': email}
-            #payload = {'iss': email, 'exp': 1300819380, 'admin': True}
+            # payload = {'iss': email}
+            payload = {'iss': email, 'exp': 30000000000, 'admin': True}
 
             token = jwt.encode(
             payload,
@@ -82,8 +82,8 @@ def register():
             session['inputEmail'] = request.form['inputEmail']
             email = request.form['inputEmail']
 
-            payload = {'iss': email}
-            #payload = {'iss': email, 'exp': 1300819380, 'admin': True}
+            # payload = {'iss': email}
+            payload = {'iss': email, 'exp': 30000000000, 'admin': True}
 
             token = jwt.encode(
             payload,
@@ -102,9 +102,11 @@ def payment():
 
     jwtToken = request.form['jwtToken']
     currentUser = request.form['stripeEmail']
-    tokend = jwt.decode(jwtToken, application.config.get('SECRET_KEY'), algorithm= 'HS256')
-
-    if tokend['iss'] != currentUser:
+    
+    try:
+        tokend = jwt.decode(jwtToken, application.config.get('SECRET_KEY'), algorithm= 'HS256')        
+    except Exception as e:
+        print e
         return render_template('login.html')
 
     cartTotal = request.form['cartTotal']
@@ -128,7 +130,7 @@ def payment():
     #     amount=amount,
     #     currency='usd',
     #     # customer=request.form['stripeEmail'],
-    #     description='A payment for the Hello World project',
+    #     description='A payment for seeka-dvd',
     #     source=token
     # )
     # print(charge)
