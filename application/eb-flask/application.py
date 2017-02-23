@@ -136,15 +136,15 @@ def payment():
     # print("Customer created")
     # print(customer)
 
-    # print("Charging Customer")
-    # charge = stripe.Charge.create(
-    #     amount=amount,
-    #     currency='usd',
-    #     # customer=request.form['stripeEmail'],
-    #     description='A payment for seeka-dvd',
-    #     source=token
-    # )
-    # print(charge)
+    print("Charging Customer")
+    charge = stripe.Charge.create(
+        amount=amount,
+        currency='usd',
+        # customer=request.form['stripeEmail'],
+        description='A payment for seeka-dvd',
+        source=token
+    )
+    print(charge)
 
     userhistory = mongo.db.userhistory
     userhistory.insert_one({"name": currentUser, "TransactionAmount": cartTotal})
@@ -153,15 +153,6 @@ def payment():
 
     return render_template('index3.html', email=currentUser, token=jwtToken, history=currentHistory)
 
-
-@application.route('/history/<name>', methods=['POST', 'GET'])
-def history(name):
-
-    userhistory = mongo.db.userhistory
-
-    if (userhistory.find({"name" : name})):
-        currentHistory = list(userhistory.find({"name" : name}))
-        return render_template('index3.html')
 
 if __name__ == '__main__':
     application.run(debug=True, host='0.0.0.0')
