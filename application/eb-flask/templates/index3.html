@@ -31,7 +31,7 @@
           <!-- Float links to the right. Hide them on small screens -->
           <li class="w3-right w3-hide-small"><a href="{{ url_for('logout') }}">LOGOUT</a></li>
           <li class="w3-right w3-hide-small"><a href="#user">{{ email }}</a></li>
-          <li class="w3-right w3-hide-small"><a href="#about">ABOUT</a></li>
+          <li class="w3-right w3-hide-small"><a href="#aboutModal" data-toggle="modal" data-target="#aboutModal">ABOUT</a></li>
           <li class="w3-right w3-hide-small"><a href="#historyModal" data-toggle="modal" data-target="#historyModal">HISTORY</a></li>
           <li class="w3-right w3-hide-small"><a href="#helpModal" data-toggle="modal" data-target="#helpModal"><span class="simpleCart_quantity"></span> | VIEW CART</a></li>
           <li class="w3-right w3-hide-small"></li>
@@ -46,7 +46,26 @@
 
    <!-- ###################### -->
 
-    <!-- Help Modal -->
+   <!-- about Modal -->
+    <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h5 class="modal-title" id="myModalLabel" align="center"><b>About SEEKAdvd</b></h4>
+         </div>
+          <div class="modal-body">
+            <h5>SeekaDVD is your one stop DVD shop. We provide thousands of award-winning movies, TV shows, documentaries and more, all at discounted prices. With SeekaDVD, the process of finding and purchasing the title you’re looking for is fast and simple due to streamlined checkout procedures. Rather than having to wait for your new DVD’s for days, SeekaDVD allows you to download purchased material instantly to your registered device. With new content added daily, SeekaDVD is guaranteed to meet all your entertainment needs.</h5>
+            <div class="modal-footer">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- history Modal -->
     <div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
@@ -54,16 +73,16 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <h5 class="modal-title" id="myModalLabel" align="center">Previous Purchases</h4>
+            <h5 class="modal-title" id="myModalLabel" align="center"><b>Previous Purchases</b></h4>
          </div>
           <div class="modal-body">
           <div class="container">
             <div class="row">
               <div class="col-md-3">
-                <h6>Order date</h6>
+                <h6><b>Order date</b></h6>
               </div> 
               <div class="col-md-3">
-                <h6>Order total ($)</h6>
+                <h6><b>Order total ($)</b></h6>
               </div> 
             </div>
           {% for entry in history %}
@@ -92,7 +111,7 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <h5 class="modal-title" id="myModalLabel">Checkout</h4>
+            <h5 class="modal-title" id="myModalLabel" align="center"><b>Checkout</b></h4>
          </div>
           <div class="modal-body">
                 <form action="{{ url_for('payment') }}" method="POST" id="payment-form">
