@@ -19,6 +19,10 @@ span[ng-click] {
     color: red;
 }
 
+#warningMessage {
+    color: red
+}
+
 #form {
 	width: 450px;
 	transition:width 0.5s;
