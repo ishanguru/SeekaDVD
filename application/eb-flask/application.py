@@ -14,30 +14,6 @@ STRIPE_SECRET_KEY = 'sk_test_ALv9duL6BrcdpUv7U20KGr99'
 stripe.api_key = STRIPE_SECRET_KEY
 stripe.api_base = "https://api-tls12.stripe.com"
 
-class User(object):
-    def __init__(self, id, username, password):
-        self.id = id
-        self.username = username
-        self.password = password
-
-    def __str__(self):
-        return "User(id='%s')" % self.id
-
-def authenticate(username, password):
-    users = mongo.db.users
-    login_user = users.find_one({'name' : request.form['inputEmail']})
-
-    if login_user:
-        if request.form['inputPassword'] == login_user['password'] :    
-            session['inputEmail'] = request.form['inputEmail']
-            email = request.form['inputEmail']
-            currentUser = (email, login_user['password'])
-            return currentUser
-
-def identity(payload):
-    user_id = session['inputEmail']
-    return user_id
-
 application = Flask(__name__,template_folder='templates')
 
 CORS(application)
@@ -47,8 +23,6 @@ application.config['MONGO_URI'] = 'mongodb://Gunnernet:nachiket_99@ds147069.mlab
 application.secret_key = 'newsecret'
 
 mongo = PyMongo(application)
-
-# jwt = JWT(application, authenticate, identity)
 
 @application.after_request
 def after_request(response):
@@ -64,15 +38,7 @@ def after_request(response):
 def index():
     return render_template('login.html')
 
-@application.route('/auth')
-def get_auth_token():
-    print jsonify(jwt)
-    return render_template('index3.html')
-    # token = user.generate_auth_token()
-    # return jsonify({ 'token': token.decode('ascii') })
-
 @application.route('/login', methods=['POST', 'GET'])
-#@jwt_required()
 def login():
     print('Cool stuff bro')
     users = mongo.db.users
@@ -128,7 +94,6 @@ def register():
 
 
 @application.route('/payment', methods=['POST', 'GET'])
-# @jwt_required()
 def payment():
 
     jwtToken = request.form['jwtToken']
