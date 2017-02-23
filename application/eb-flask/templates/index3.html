@@ -36,9 +36,10 @@
           <li><a href="#home" class="w3-margin-left"><i><b>SEEKAdvd</b></i></a></li>
 
           <!-- Float links to the right. Hide them on small screens -->
-          <li class="w3-right w3-hide-small"><a href="#logout">{{ email }}</a></li>
+          <li class="w3-right w3-hide-small"><a href="{{ url_for('logout') }}">LOGOUT</a></li>
+          <li class="w3-right w3-hide-small"><a href="#user">{{ email }}</a></li>
           <li class="w3-right w3-hide-small"><a href="#about">ABOUT</a></li>
-          <li class="w3-right w3-hide-small"><a href="#settings">SETTINGS</a></li>
+          <li class="w3-right w3-hide-small"><a href="#history">HISTORY</a></li>
           <li class="w3-right w3-hide-small"><a href="#helpModal" data-toggle="modal" data-target="#helpModal"><span class="simpleCart_quantity"></span> | VIEW CART</a></li>
           <li class="w3-right w3-hide-small"></li>
 
@@ -60,7 +61,7 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">This will be our stripe checkout stuff</h4>
+            <h5 class="modal-title" id="myModalLabel">Checkout</h4>
          </div>
           <div class="modal-body">
                 <form action="{{ url_for('payment') }}" method="POST" id="payment-form">
