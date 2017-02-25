@@ -1,4 +1,4 @@
-Team Name: KILLING_ITaaS
+Team Name: JUSTaaS
 
 Ishan Guru (ig2333)
 Nachiket Mrugank Paranjape (nmp2139)
@@ -13,5 +13,4 @@ Logon to service with JWTs running between the UI static html pages and our user
 
 customer transactions recorded in our database after each transaction
 
-Amazon S3 hosts HTML webpages
 Elastic Beanstalk hosts user service
